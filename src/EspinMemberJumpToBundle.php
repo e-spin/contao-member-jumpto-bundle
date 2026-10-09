@@ -32,10 +32,12 @@ class EspinMemberJumpToBundle extends AbstractBundle
 
     /**
      * @param array<array-key, mixed> $config
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     #[\Override]
-    public function loadExtension(array $config, ContainerConfigurator $configurator, ContainerBuilder $container): void
+    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        $configurator->import('../config/services.yaml');
+        $container->import('../config/services.yaml');
     }
 }

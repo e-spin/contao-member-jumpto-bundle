@@ -1,6 +1,8 @@
 {
   "name": "e-spin/contao-member-jumpto-bundle",
   "description": "Let frontend members choose the page they land on after the login.",
+  "license": "LGPL-3.0-or-later",
+  "type": "contao-bundle",
   "keywords": [
     "contao",
     "member",
@@ -8,9 +10,6 @@
     "redirect",
     "jumpto"
   ],
-  "type": "contao-bundle",
-  "homepage": "https://www.e-spin.de",
-  "license": "LGPL-3.0-or-later",
   "authors": [
     {
       "name": "Ingolf Steinhardt",
@@ -19,25 +18,35 @@
       "role": "Developer"
     }
   ],
+  "homepage": "https://www.e-spin.de",
   "support": {
     "issues": "https://github.com/e-spin/contao-member-jumpto-bundle/issues",
     "source": "https://github.com/e-spin/contao-member-jumpto-bundle"
   },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/e-spin"
+    }
+  ],
   "require": {
     "php": "^8.3",
     "contao/core-bundle": "^5.3",
     "doctrine/dbal": "^3.6 || ^4.3",
     "menatwork/contao-multicolumnwizard-bundle": "^3.5",
+    "psr/log": "^1.0 || ^2.0 || ^3.0",
+    "symfony/dependency-injection": "^6.4 || ^7.4",
+    "symfony/event-dispatcher": "^6.4 || ^7.4",
     "symfony/http-foundation": "^6.4 || ^7.4",
     "symfony/http-kernel": "^6.4 || ^7.4",
+    "symfony/routing": "^6.4 || ^7.4",
     "symfony/security-bundle": "^6.4 || ^7.4",
     "symfony/security-http": "^6.4 || ^7.4",
-    "symfony/routing": "^6.4 || ^7.4",
     "symfony/translation-contracts": "^3.0"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.8",
-    "phpunit/phpunit": "^9.6 || ^12.0"
+    "phpcq/runner-bootstrap": "^1.0@dev"
   },
   "autoload": {
     "psr-4": {

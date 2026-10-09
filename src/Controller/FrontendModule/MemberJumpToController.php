@@ -39,6 +39,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * The setting of a member in the frontend: the page to land on after the login.
  *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @final
  */
 #[AsFrontendModule(MemberJumpToController::TYPE, category: 'user', template: 'frontend_module/member_jumpto')]

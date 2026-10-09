@@ -27,6 +27,9 @@ use MenAtWork\MultiColumnWizardBundle\MultiColumnWizardBundle;
  */
 class Plugin implements BundlePluginInterface
 {
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     #[\Override]
     public function getBundles(ParserInterface $parser): array
     {
