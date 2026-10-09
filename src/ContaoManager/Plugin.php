@@ -25,7 +25,7 @@ use MenAtWork\MultiColumnWizardBundle\MultiColumnWizardBundle;
 /**
  * @internal
  */
-class Plugin implements BundlePluginInterface
+final class Plugin implements BundlePluginInterface
 {
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)

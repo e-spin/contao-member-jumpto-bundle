@@ -18,5 +18,24 @@
                 <referencedProperty name="Contao\ModuleModel::$memberJumpToPages"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
+        <!-- The parameter names of loadExtension() differ between the Symfony versions the bundle supports. -->
+        <ParamNameMismatch>
+            <errorLevel type="suppress">
+                <file name="src/EspinMemberJumpToBundle.php"/>
+            </errorLevel>
+        </ParamNameMismatch>
+        <!-- The container of the controller is injected by the framework after the construction. -->
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <file name="src/Controller/FrontendModule/MemberJumpToController.php"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <!-- The Contao models hold the raw strings of the database, whatever their docblocks say. -->
+        <RedundantCastGivenDocblockType>
+            <errorLevel type="suppress">
+                <file name="src/Controller/FrontendModule/MemberJumpToController.php"/>
+                <file name="src/Security/TargetPageResolver.php"/>
+            </errorLevel>
+        </RedundantCastGivenDocblockType>
     </issueHandlers>
 </psalm>

@@ -59,6 +59,7 @@ class MemberJumpToController extends AbstractFrontendModuleController
     ) {
     }
 
+    #[\Override]
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         $user = $this->security->getUser();

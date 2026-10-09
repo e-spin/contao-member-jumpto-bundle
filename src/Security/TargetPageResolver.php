@@ -22,7 +22,7 @@ use Contao\StringUtil;
 /**
  * Finds the page a member is allowed to land on.
  */
-class TargetPageResolver
+final class TargetPageResolver
 {
     /**
      * @return PageModel|null Null if the page is gone, not published or not accessible for the member.
