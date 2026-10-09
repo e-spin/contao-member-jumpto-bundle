@@ -43,7 +43,7 @@ Im Backend steht die Wahl in den Mitgliedsdaten im Bereich „Login“ und läss
 
 ### Voraussetzungen
 
-Contao ^5.3, PHP ^8.3, `menatwork/contao-multicolumnwizard-bundle`.
+Contao ^5.3 oder ^6.0, PHP ^8.3/^8.4, `menatwork/contao-multicolumnwizard-bundle`.
 
 ## English
 
@@ -85,4 +85,4 @@ In the backend the choice is part of the member data in the "Login" section, whe
 
 ### Requirements
 
-Contao ^5.3, PHP ^8.3, `menatwork/contao-multicolumnwizard-bundle`.
+Contao ^5.3 or ^6.0, PHP ^8.3/^8.4, `menatwork/contao-multicolumnwizard-bundle`.

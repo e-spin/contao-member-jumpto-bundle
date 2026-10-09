@@ -19,6 +19,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * @final
+ *
+ * @psalm-suppress DeprecatedInterface AbstractBundle is no drop-in replacement: it disables the
+ *     classic Extension auto-discovery, so switching would require porting the extension to
+ *     loadExtension().
  */
 class EspinMemberJumpToBundle extends Bundle
 {
