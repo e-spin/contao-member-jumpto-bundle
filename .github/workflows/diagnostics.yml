@@ -61,6 +61,11 @@ jobs:
             ${{ runner.os }}-${{ matrix.php }}-build-${{ env.cache-name }}-
 
       # install dependencies and tools
+      - name: Require the development version of the multicolumnwizard for Contao 6
+        # The Contao 6 support is not released yet, it only exists on the develop branch (3.8.x-dev).
+        if: startsWith(matrix.contao, '~6')
+        run: composer require menatwork/contao-multicolumnwizard-bundle "^3.8@dev" --no-update
+
       - name: Install composer dependencies
         run: |
           composer require contao/core-bundle ${{ matrix.contao }} --no-update
