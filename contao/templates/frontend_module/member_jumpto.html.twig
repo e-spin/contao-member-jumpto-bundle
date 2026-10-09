@@ -1,0 +1,27 @@
+{% extends "@Contao/frontend_module/_base.html.twig" %}
+
+{% block content %}
+    {% for message in messages %}
+        <p class="confirmation">{{ message }}</p>
+    {% endfor %}
+
+    <form action="{{ action }}" method="post">
+        <div class="formbody">
+            <input type="hidden" name="FORM_SUBMIT" value="{{ form_id }}">
+            <input type="hidden" name="REQUEST_TOKEN" value="{{ request_token }}">
+
+            <div class="widget widget-select">
+                <label for="{{ form_id }}_page">{{ 'MSC.memberJumpToLabel'|trans({}, 'contao_default') }}</label>
+                <select name="memberJumpToPage" id="{{ form_id }}_page" class="select">
+                    {% for option in options %}
+                        <option value="{{ option.value }}"{{ option.selected ? ' selected' : '' }}>{{ option.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="widget widget-submit">
+                <button type="submit" class="submit">{{ 'MSC.memberJumpToSubmit'|trans({}, 'contao_default') }}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

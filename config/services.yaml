@@ -1,0 +1,19 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Espin\MemberJumpToBundle\:
+    resource: '../src/'
+    exclude:
+      - '../src/EspinMemberJumpToBundle.php'
+      - '../src/ContaoManager/'
+      - '../src/Model/'
+
+  Espin\MemberJumpToBundle\Controller\FrontendModule\MemberJumpToController:
+    arguments:
+      $tokenManager: '@contao.csrf.token_manager'
+
+  Espin\MemberJumpToBundle\EventListener\LoginRedirectListener:
+    arguments:
+      $urlGenerator: '@contao.routing.content_url_generator'
