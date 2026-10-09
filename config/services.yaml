@@ -8,6 +8,7 @@ services:
     exclude:
       - '../src/EspinMemberJumpToBundle.php'
       - '../src/ContaoManager/'
+      - '../src/DependencyInjection/'
       - '../src/Model/'
 
   Espin\MemberJumpToBundle\Controller\FrontendModule\MemberJumpToController:

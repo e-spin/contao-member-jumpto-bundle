@@ -35,6 +35,7 @@
     "doctrine/dbal": "^3.6 || ^4.3",
     "menatwork/contao-multicolumnwizard-bundle": "^3.5",
     "psr/log": "^1.0 || ^2.0 || ^3.0",
+    "symfony/config": "^6.4 || ^7.4",
     "symfony/dependency-injection": "^6.4 || ^7.4",
     "symfony/event-dispatcher": "^6.4 || ^7.4",
     "symfony/http-foundation": "^6.4 || ^7.4",
@@ -42,7 +43,8 @@
     "symfony/routing": "^6.4 || ^7.4",
     "symfony/security-bundle": "^6.4 || ^7.4",
     "symfony/security-http": "^6.4 || ^7.4",
-    "symfony/translation-contracts": "^3.0"
+    "symfony/translation-contracts": "^3.0",
+    "symfony/yaml": "^6.4 || ^7.4"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.8",

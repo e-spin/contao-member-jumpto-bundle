@@ -18,12 +18,6 @@
                 <referencedProperty name="Contao\ModuleModel::$memberJumpToPages"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
-        <!-- The parameter names of loadExtension() differ between the Symfony versions the bundle supports. -->
-        <ParamNameMismatch>
-            <errorLevel type="suppress">
-                <file name="src/EspinMemberJumpToBundle.php"/>
-            </errorLevel>
-        </ParamNameMismatch>
         <!-- The container of the controller is injected by the framework after the construction. -->
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
