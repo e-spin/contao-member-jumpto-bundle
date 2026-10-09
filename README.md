@@ -21,7 +21,7 @@ Danach im Contao-Manager oder per `vendor/bin/contao-console contao:migrate` die
 1. Im Backend ein Frontend-Modul vom Typ **Zielseite nach dem Login** anlegen.
 2. In der Modul-Konfiguration die möglichen Zielseiten eintragen. Jede Zeile hat eine Seite, eine optionale
    Bezeichnung (sonst der Seitentitel) und die Markierung **Standard**. Es gibt genau einen Standard, ohne Markierung
-   gilt die erste Zeile.
+   gilt die erste Zeile. Dieselbe Seite darf mehrfach vorkommen, z. B. mit anderer Bezeichnung.
 3. Das Modul auf einer Seite einbinden, auf die nur angemeldete Mitglieder kommen.
 
 Das Modul zeigt nur Seiten, die veröffentlicht sind und auf die das Mitglied nach seinen Gruppen zugreifen darf. Ist
@@ -63,7 +63,7 @@ Then update the database in the Contao Manager or with `vendor/bin/contao-consol
 
 1. Create a frontend module of the type **Page after the login** in the backend.
 2. List the possible target pages in the module settings. Each row has a page, an optional label (the page title
-   otherwise) and the **Default** mark. There is exactly one default, without a mark the first row is used.
+   otherwise) and the **Default** mark. There is exactly one default, without a mark the first row is used. The same page may be listed several times, e.g. with another label.
 3. Put the module on a page which only logged in members can reach.
 
 The module only shows pages which are published and which the member may access according to the member groups. It stays

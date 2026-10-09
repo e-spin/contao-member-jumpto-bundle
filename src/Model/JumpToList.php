@@ -32,16 +32,15 @@ final class JumpToList
     {
         $rows = self::rows($stored);
 
+        // The same page may be listed several times, e.g. with another label.
         $entries = [];
-        $seen    = [];
         foreach ($rows as $row) {
             $pageId = \is_array($row) ? (int) ($row['page'] ?? 0) : 0;
-            if ($pageId < 1 || isset($seen[$pageId])) {
+            if ($pageId < 1) {
                 continue;
             }
 
-            $seen[$pageId] = true;
-            $entries[]     = new JumpToEntry($pageId, \trim((string) ($row['label'] ?? '')), !empty($row['default']));
+            $entries[] = new JumpToEntry($pageId, \trim((string) ($row['label'] ?? '')), !empty($row['default']));
         }
 
         return new self(self::ensureOneDefault($entries));
@@ -58,6 +57,9 @@ final class JumpToList
         return [] === $this->entries;
     }
 
+    /**
+     * The first entry of the page.
+     */
     public function find(int $pageId): ?JumpToEntry
     {
         foreach ($this->entries as $entry) {

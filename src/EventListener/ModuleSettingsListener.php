@@ -31,7 +31,7 @@ class ModuleSettingsListener
     }
 
     /**
-     * Stores the list with exactly one default and refuses a page which is listed twice.
+     * Stores the list with exactly one default and refuses rows without a page.
      */
     #[AsCallback(table: 'tl_module', target: 'fields.memberJumpToPages.save')]
     public function onSave(mixed $value): string

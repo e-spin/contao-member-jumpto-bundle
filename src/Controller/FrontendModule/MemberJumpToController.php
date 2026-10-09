@@ -90,12 +90,12 @@ class MemberJumpToController extends AbstractFrontendModuleController
     /**
      * Saves the choice and goes back to the page, so a reload does not send the form again.
      *
-     * @param array<int, JumpToEntry> $options The accessible entries indexed by their page id.
+     * @param list<JumpToEntry> $options The accessible entries.
      */
     private function handleSubmit(Request $request, FrontendUser $user, array $options, string $formId): void
     {
         $pageId  = (int) $request->request->get('memberJumpToPage');
-        $success = isset($options[$pageId]) && $this->store((int) $user->id, $pageId);
+        $success = $this->isListed($options, $pageId) && $this->store((int) $user->id, $pageId);
 
         $this->flashBag($request)?->add(
             $formId,
@@ -125,14 +125,14 @@ class MemberJumpToController extends AbstractFrontendModuleController
     /**
      * Leaves out the pages which are gone or which the member is not allowed to see.
      *
-     * @return array<int, JumpToEntry> Indexed by the page id.
+     * @return list<JumpToEntry>
      */
     private function availableEntries(JumpToList $list, FrontendUser $user): array
     {
         $available = [];
         foreach ($list->entries() as $entry) {
             if (null !== $this->resolver->find($entry->pageId, $user)) {
-                $available[$entry->pageId] = $entry;
+                $available[] = $entry;
             }
         }
 
@@ -140,21 +140,22 @@ class MemberJumpToController extends AbstractFrontendModuleController
     }
 
     /**
-     * @param array<int, JumpToEntry> $options
+     * @param list<JumpToEntry> $options
      *
      * @return list<array{value: int, label: string, selected: bool}>
      */
     private function buildOptions(array $options, int $chosen): array
     {
         // The default is only the preselection for members who have not chosen yet or chose a page which is gone.
-        $selected = isset($options[$chosen]) ? $chosen : $this->defaultPage($options);
+        // A page which is listed several times is preselected at its first entry.
+        $selected = $this->firstIndexOf($options, $chosen) ?? $this->defaultIndex($options);
 
         $result = [];
-        foreach ($options as $pageId => $entry) {
+        foreach ($options as $index => $entry) {
             $result[] = [
-                'value'    => $pageId,
+                'value'    => $entry->pageId,
                 'label'    => $this->labelOf($entry),
-                'selected' => $pageId === $selected,
+                'selected' => $index === $selected,
             ];
         }
 
@@ -162,17 +163,39 @@ class MemberJumpToController extends AbstractFrontendModuleController
     }
 
     /**
-     * @param array<int, JumpToEntry> $options
+     * @param list<JumpToEntry> $options
      */
-    private function defaultPage(array $options): int
+    private function isListed(array $options, int $pageId): bool
     {
-        foreach ($options as $pageId => $entry) {
-            if ($entry->default) {
-                return $pageId;
+        return null !== $this->firstIndexOf($options, $pageId);
+    }
+
+    /**
+     * @param list<JumpToEntry> $options
+     */
+    private function firstIndexOf(array $options, int $pageId): ?int
+    {
+        foreach ($options as $index => $entry) {
+            if ($entry->pageId === $pageId) {
+                return $index;
             }
         }
 
-        return (int) \array_key_first($options);
+        return null;
+    }
+
+    /**
+     * @param list<JumpToEntry> $options
+     */
+    private function defaultIndex(array $options): int
+    {
+        foreach ($options as $index => $entry) {
+            if ($entry->default) {
+                return $index;
+            }
+        }
+
+        return 0;
     }
 
     private function labelOf(JumpToEntry $entry): string

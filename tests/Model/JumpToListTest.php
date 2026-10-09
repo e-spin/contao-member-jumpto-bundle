@@ -44,12 +44,26 @@ class JumpToListTest extends TestCase
         self::assertFalse($list->find(6)?->default);
     }
 
-    public function testSkipsBrokenAndDuplicateRows(): void
+    public function testSkipsBrokenRows(): void
     {
-        $list = JumpToList::fromStored([['page' => 0], 'foo', ['page' => 2], ['page' => 2, 'label' => 'again']]);
+        $list = JumpToList::fromStored([['page' => 0], 'foo', ['page' => 2]]);
 
         self::assertCount(1, $list->entries());
-        self::assertSame('', $list->find(2)?->label);
+        self::assertSame(2, $list->default()?->pageId);
+    }
+
+    public function testKeepsThePageSeveralTimes(): void
+    {
+        $list = JumpToList::fromStored([
+            ['page' => 2, 'label' => 'first'],
+            ['page' => 5],
+            ['page' => 2, 'label' => 'again', 'default' => '1'],
+        ]);
+
+        self::assertCount(3, $list->entries());
+        self::assertSame('first', $list->find(2)?->label);
+        self::assertSame('again', $list->default()?->label);
+        self::assertFalse($list->entries()[0]->default);
     }
 
     /**
