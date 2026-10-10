@@ -52,40 +52,27 @@ final class JumpToList
         return $this->entries;
     }
 
-    public function isEmpty(): bool
-    {
-        return [] === $this->entries;
-    }
-
     /**
-     * The first entry of the page.
+     * The value for the wizard field, the counterpart of fromStored().
      */
-    public function find(int $pageId): ?JumpToEntry
+    public function toStored(): string
     {
-        foreach ($this->entries as $entry) {
-            if ($entry->pageId === $pageId) {
-                return $entry;
-            }
-        }
-
-        return null;
-    }
-
-    public function default(): ?JumpToEntry
-    {
-        foreach ($this->entries as $entry) {
-            if ($entry->default) {
-                return $entry;
-            }
-        }
-
-        return null;
+        return \serialize(\array_map(
+            static fn (JumpToEntry $entry): array => [
+                'page'    => $entry->pageId,
+                'label'   => $entry->label,
+                'default' => $entry->default ? '1' : '',
+            ],
+            $this->entries
+        ));
     }
 
     /**
+     * The rows of a stored value as they are, also the broken ones.
+     *
      * @return list<mixed>
      */
-    private static function rows(mixed $stored): array
+    public static function rows(mixed $stored): array
     {
         if (\is_string($stored) && '' !== $stored) {
             $stored = @\unserialize($stored, ['allowed_classes' => false]);

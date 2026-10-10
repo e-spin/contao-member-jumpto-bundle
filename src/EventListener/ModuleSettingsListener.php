@@ -36,23 +36,15 @@ class ModuleSettingsListener
     #[AsCallback(table: 'tl_module', target: 'fields.memberJumpToPages.save')]
     public function onSave(mixed $value): string
     {
-        $rows = \is_string($value) && '' !== $value ? @\unserialize($value, ['allowed_classes' => false]) : [];
-        $rows = \is_array($rows) ? $rows : [];
-
+        $rows = JumpToList::rows($value);
         $list = JumpToList::fromStored($rows);
+
         if (\count($list->entries()) !== \count($rows)) {
             throw new \RuntimeException(
                 $this->translator->trans('ERR.memberJumpToInvalidList', [], 'contao_default')
             );
         }
 
-        return \serialize(\array_map(
-            static fn ($entry): array => [
-                'page'    => $entry->pageId,
-                'label'   => $entry->label,
-                'default' => $entry->default ? '1' : '',
-            ],
-            $list->entries()
-        ));
+        return $list->toStored();
     }
 }

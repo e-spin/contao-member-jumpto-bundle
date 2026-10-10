@@ -96,7 +96,7 @@ class MemberJumpToController extends AbstractFrontendModuleController
     private function handleSubmit(Request $request, FrontendUser $user, array $options, string $formId): void
     {
         $pageId  = (int) $request->request->get('memberJumpToPage');
-        $success = $this->isListed($options, $pageId) && $this->store((int) $user->id, $pageId);
+        $success = null !== $this->firstIndexOf($options, $pageId) && $this->store((int) $user->id, $pageId);
 
         $this->flashBag($request)?->add(
             $formId,
@@ -161,14 +161,6 @@ class MemberJumpToController extends AbstractFrontendModuleController
         }
 
         return $result;
-    }
-
-    /**
-     * @param list<JumpToEntry> $options
-     */
-    private function isListed(array $options, int $pageId): bool
-    {
-        return null !== $this->firstIndexOf($options, $pageId);
     }
 
     /**

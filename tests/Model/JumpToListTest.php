@@ -21,15 +21,15 @@ class JumpToListTest extends TestCase
         ]));
 
         self::assertCount(2, $list->entries());
-        self::assertSame('Account', $list->find(4)?->label);
-        self::assertSame(7, $list->default()?->pageId);
+        self::assertSame('Account', $list->entries()[0]->label);
+        self::assertSame(7, self::defaultPage($list));
     }
 
     public function testFirstEntryIsDefaultWithoutMark(): void
     {
         $list = JumpToList::fromStored([['page' => 3], ['page' => 5]]);
 
-        self::assertSame(3, $list->default()?->pageId);
+        self::assertSame(3, self::defaultPage($list));
     }
 
     public function testFirstMarkWinsWithSeveralMarks(): void
@@ -40,8 +40,8 @@ class JumpToListTest extends TestCase
             ['page' => 6, 'default' => '1'],
         ]);
 
-        self::assertSame(5, $list->default()?->pageId);
-        self::assertFalse($list->find(6)?->default);
+        self::assertSame(5, self::defaultPage($list));
+        self::assertFalse($list->entries()[2]->default);
     }
 
     public function testSkipsBrokenRows(): void
@@ -49,7 +49,7 @@ class JumpToListTest extends TestCase
         $list = JumpToList::fromStored([['page' => 0], 'foo', ['page' => 2]]);
 
         self::assertCount(1, $list->entries());
-        self::assertSame(2, $list->default()?->pageId);
+        self::assertSame(2, self::defaultPage($list));
     }
 
     public function testKeepsThePageSeveralTimes(): void
@@ -61,9 +61,28 @@ class JumpToListTest extends TestCase
         ]);
 
         self::assertCount(3, $list->entries());
-        self::assertSame('first', $list->find(2)?->label);
-        self::assertSame('again', $list->default()?->label);
+        self::assertSame('first', $list->entries()[0]->label);
+        self::assertSame('again', $list->entries()[2]->label);
+        self::assertTrue($list->entries()[2]->default);
         self::assertFalse($list->entries()[0]->default);
+    }
+
+    public function testStoredValueIsReadBackUnchanged(): void
+    {
+        $list = JumpToList::fromStored([['page' => 3, 'label' => 'A'], ['page' => 5, 'default' => '1']]);
+
+        self::assertEquals($list, JumpToList::fromStored($list->toStored()));
+    }
+
+    private static function defaultPage(JumpToList $list): ?int
+    {
+        foreach ($list->entries() as $entry) {
+            if ($entry->default) {
+                return $entry->pageId;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -73,9 +92,7 @@ class JumpToListTest extends TestCase
     {
         $list = JumpToList::fromStored($stored);
 
-        self::assertTrue($list->isEmpty());
-        self::assertNull($list->default());
-        self::assertNull($list->find(1));
+        self::assertSame([], $list->entries());
     }
 
     /**
